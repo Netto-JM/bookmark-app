@@ -5,7 +5,7 @@ const bookmarkForm = document.getElementById('bookmark-form');
 const websiteNameEl = document.getElementById('website-name');
 const websiteUrlEl = document.getElementById('website-url');
 const bookmarksContainer = document.getElementById('bookmarks-container');
-let myGithubFavicon = {};
+
 let bookmarks = {};
 
 // Show Modal, Focus on Input
@@ -35,7 +35,8 @@ function validateForm(nameValue, urlValue) {
 }
 
 function setMyGithubFavicon() {
-  if (myGithubFavicon = document.querySelector('img[src="https://s2.googleusercontent.com/s2/favicons?domain=https://github.com/Netto-JM"]')) {
+  const myGithubFavicon = document.querySelector('img[src="https://s2.googleusercontent.com/s2/favicons?domain=https://github.com/Netto-JM"]');
+  if (myGithubFavicon) {
     myGithubFavicon.setAttribute('src', 'favicon.ico');
   }
 }
