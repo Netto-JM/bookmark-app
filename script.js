@@ -19,8 +19,7 @@ modalShow.addEventListener('click', showModal);
 modalClose.addEventListener('click', () => modal.classList.remove('show-modal'));
 window.addEventListener('click', (e) => (e.target === modal ? modal.classList.remove('show-modal') : false));
 
-// Validate Form
-function validate(nameValue, urlValue) {
+function validateForm(nameValue, urlValue) {
   const expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
   const regex = new RegExp(expression);
   if (!nameValue || !urlValue) {
@@ -35,8 +34,13 @@ function validate(nameValue, urlValue) {
   return true;
 }
 
-//Build Bookmarks DOM
-function buildBookmarks() {
+function setMyGithubFavicon() {
+  if (myGithubFavicon = document.querySelector('img[src="https://s2.googleusercontent.com/s2/favicons?domain=https://github.com/Netto-JM"]')) {
+    myGithubFavicon.setAttribute('src', 'favicon.ico');
+  }
+}
+
+function buildBookmarksDOM() {
   // Remove all bookmark elements
   bookmarksContainer.textContent = '';
   // Build items
@@ -70,7 +74,6 @@ function buildBookmarks() {
   setMyGithubFavicon();
 }
 
-// Fetch Bookmarks
 function fetchBookmarks() {
   // Get bookmarks from localStorage if available
   if (localStorage.getItem('bookmarks')) {
@@ -85,12 +88,9 @@ function fetchBookmarks() {
       };
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
   }
-  buildBookmarks();
-  // const favicon = document.querySelector('img[src="https://s2.googleusercontent.com/s2/favicons?domain=https://github.com/Netto-JM"]');
-  // favicon.setAttribute('src', 'favicon.ico');
+  buildBookmarksDOM();
 }
 
-// Delete Bookmark
 function deleteBookmark(id) {
   if (bookmarks[id]) {
     delete bookmarks[id];
@@ -108,7 +108,7 @@ function storeBookmark(e) {
   if (!urlValue.includes('https://') && !urlValue.includes('http://')) {
     urlValue = `https://${urlValue}`; 
   }
-  if (!validate(nameValue, urlValue)) {
+  if (!validateForm(nameValue, urlValue)) {
     return false;
   }
   bookmarks[urlValue] = {
@@ -126,9 +126,3 @@ bookmarkForm.addEventListener('submit', storeBookmark);
 
 // On Load, Fetch Bookmarks
 fetchBookmarks();
-
-function setMyGithubFavicon() {
-  if (myGithubFavicon = document.querySelector('img[src="https://s2.googleusercontent.com/s2/favicons?domain=https://github.com/Netto-JM"]')) {
-    myGithubFavicon.setAttribute('src', 'favicon.ico');
-  }
-}
